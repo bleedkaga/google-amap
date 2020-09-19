@@ -32,6 +32,10 @@
     "parserOptions": {
       "parser": "babel-eslint"
     },
+    "globals": {
+        "google": true,
+        "MarkerClusterer": true
+    },
     "rules": {}
   },
   "browserslist": [
