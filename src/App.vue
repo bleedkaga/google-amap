@@ -1,18 +1,18 @@
 <template>
   <div id="app">
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-    <Border />
+    <HelloWorld v-if="true" msg="Welcome to Your Vue.js App"/>
+    <Border v-else/>
   </div>
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue'
+import HelloWorld from './components/HelloWorld.vue'
 import Border from './components/Border';
 
 export default {
   name: 'App',
   components: {
-    // HelloWorld
+    HelloWorld,
     Border
   }
 }
