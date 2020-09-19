@@ -3,10 +3,7 @@
 </template>
 
 <script>
-import json1 from '../data/20200818.json';
-import json2 from '../data/20200819.json';
-import json3 from '../data/20200820.json';
-import json4 from '../data/20200821.json';
+
 export default {
 	name: 'HelloWorld',
 	props: {
@@ -14,18 +11,28 @@ export default {
     },
     data(){
         return {
-            locations: [
-                ...json1,
-                ...json2,
-                ...json3,
-                ...json4,
-            ]
+            locations: [],
+            arr: ['20200818','20200819','20200820','20200821'],
+            i: 0
         }
     },
 	mounted() {
-		this.loadSDK();
+        this.loadData();
 	},
 	methods: {
+        loadData(){
+            window.$.get(`/data/${this.arr[this.i]}.json`).then(res => {
+                const d = JSON.stringify(res)
+                this.locations.push(JSON.parse(d));
+                if(this.i !== this.arr.length - 1){
+                    this.i++;
+                    this.loadData()
+                } else {
+                    this.locations = this.locations.reduce((prev, next) => prev.concat(next), [])
+                    this.loadSDK();
+                }
+            })
+        },
 		loadSDK() {
 			return new Promise((resolve) => {
 				const el = document.getElementById('google-map');
@@ -74,6 +81,7 @@ export default {
         },
         addMarkerCluster(){
             var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            console.log(this.locations)
             var markers = this.locations.map(function(location, i) {
                 return new google.maps.Marker({
                     position: location,
